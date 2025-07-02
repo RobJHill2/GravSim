@@ -12,7 +12,7 @@ class Particle:
         self.v = numpy.array(u)
 
     def acc(self):
-        self.v += self.F / self.m
+        self.v += (self.F / self.m)
 
     def move(self):
         self.p += self.v

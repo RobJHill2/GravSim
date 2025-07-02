@@ -9,10 +9,30 @@ class Universe:
     paused = False
 
     def __init__(self):
-        paused = True
+        self.paused = True
 
     def simulate(self):
-        pass
+        currForces = {}
+        # dict of particles indexes and all forces acting on it
+        for pIndex in range(len(self.particles)):
+            currForces[pIndex] = []
+        for f in self.forces:
+            for pIndex in f.Npair:
+                currForces[pIndex].append(f.value)
 
-    def createParticle(self):
-        pass
+        for pIndex in currForces:
+            self.particles[pIndex].F = sum(currForces[pIndex])
+        # calculates resulant force on each particle
+
+        for p in self.particles:
+            p.acc()
+            p.move()
+
+        for f in self.forces:
+            f.updateForce(self.particles)
+
+    def createParticle(self, m, p, u):
+        self.particles.append(particle.Particle(m, p, u))
+        A = len(self.particles) - 1
+        for B in range(len(self.particles) - 1):
+            self.forces.append(force.GForce(A, B, self.particles))

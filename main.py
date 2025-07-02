@@ -12,12 +12,14 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                myUniverse.paused = True
 
-    msg = input()
-
-    if msg == "p":
-        myUniverse.paused = True
-    elif msg == "r":
-        myUniverse.paused = False
+    if myUniverse.paused:
+        msg = input()
+        if msg == "play":
+            myUniverse.paused = False
     else:
         myUniverse.simulate()
+        myDisplay.draw(myUniverse.particles)
