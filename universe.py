@@ -31,8 +31,8 @@ class Universe:
         for f in self.forces:
             f.updateForce(self.particles)
 
-    def createParticle(self, m, p, u):
-        self.particles.append(particle.Particle(m, p, u))
+    def createParticle(self, m, P, u):
+        self.particles.append(particle.Particle(m, P, u))
         A = len(self.particles) - 1
         for B in range(len(self.particles) - 1):
             self.forces.append(force.GForce(A, B, self.particles))

@@ -5,7 +5,8 @@ import pygame
 pygame.init()
 
 myUniverse = universe.Universe()
-myDisplay = display.Display([500,500])
+size, ratio = int(input("size: ")), float(input("ratio: "))
+myDisplay = display.Display(size, ratio)
 
 running = True
 while running:
@@ -17,9 +18,24 @@ while running:
                 myUniverse.paused = True
 
     if myUniverse.paused:
-        msg = input()
-        if msg == "play":
-            myUniverse.paused = False
+        command = input("-> ").split(" ")
+        while command[0] != "play":
+            if command[0] == "create":
+                try:
+                    m = float(command[1])
+                    P = [float(command[2]), float(command[3])]
+                    u = [float(command[4]), float(command[5])]
+                except ValueError:
+                    print("ERROR: BAD INPUT")
+                except IndexError:
+                    print("ERROR: BAD INPUT")
+                else:
+                    myUniverse.createParticle(m, P, u)
+
+            command = input("-> ").split(" ")
+        myUniverse.paused = False
     else:
         myUniverse.simulate()
         myDisplay.draw(myUniverse.particles)
+
+pygame.quit()

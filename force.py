@@ -11,7 +11,7 @@ class GForce:
 
     def updateForce(self, particles):
         Mm = particles[self.Npair[0]].m * particles[self.Npair[1]].m
-        r = particles[self.Npair[0]].p - particles[self.Npair[1]].p
+        r = particles[self.Npair[0]].P - particles[self.Npair[1]].P
         mag_r = numpy.linalg.norm(r)
         unit_r = r / mag_r
         self.value = self.G_CONSTANT * (Mm / (mag_r**2)) * unit_r
